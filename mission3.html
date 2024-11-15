@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mission 3</title>
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="icon" type="image/png" href="assets/images/logokdou.png"/>
+</head>
+
+<body>
+<header>
+  <img src="assets/images/logokdou.png" class="logo" height="50" width="50"/>
+  <div class="text-box">
+    <h1>MISSION 3</h1>
+  </div>
+
+  <nav>
+    <div class="nav-links">
+      <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+      <ul class="nav-links">
+        <li><a href="index.html">ACCUEIL</a></li>
+        <li><a href="mission1.html">MISSION 1</a></li>
+        <li><a href="mission2.html">MISSION 2</a></li>
+        <li><a href="mission3.html">MISSION 3</a></li>
+        <li><a href="mission4.html">MISSION 4</a></li>
+        <li><a href="conclusion.html">CONCLUSION</a></li>
+      </ul>
+    </div>
+  </nav>
+
+</header>
+
+<main>
+
+  <section id="mission3">
+    <section class="context-section">
+    <h2>CONTEXTE</h2>
+    <p>
+      Cette mission vise à étudier la base de données de KDou afin de proposer des analyses précises et des indicateurs
+      pertinents pour la prise de décision.
+      L'objectif du projet est de prendre en compte différents aspects de l'entreprise, tels que les produits,
+      les fournisseurs et les habitudes d'achat des clients.
+      En étudiant, par exemple, les ventes de desserts et de boissons en termes de santé, l'équipe examine les produits
+      qui suscitent l'intérêt, leur origine et le chiffre d'affaires qui y est lié.
+      En outre, la société désire améliorer sa gamme en repérant les produits non commandés ou les fournisseurs
+      sous-utilisés, tout en explorant les possibilités de collaboration entre clients pour des livraisons partagées.
+      Les résultats obtenus aideront KDou à orienter sa stratégie commerciale vers une plus grande efficacité et durabilité.
+    </p>
+    </section>
+
+    <section>
+    <h1>ANALYSE DES DONNÉES POUR L'ENTREPRISE KDOU :</h1>
+    </section>
+
+
+
+    <h2>1. Desserts / Boissons</h2>
+    <table class="indicators-table">
+      <thead>
+        <tr>
+          <th>✔️Indicateur</th>
+          <th>✔️Énoncé</th>
+          <th>✔️Construction (QBE)</th>
+          <th>✔️SQL</th>
+          <th>✔️Résultat</th>
+        </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td>Produits vendus à 50€ ou plus avec leur pays d'origine</td>
+        <td>Combien y a-t-il des produits correspondants vendus 50€ ou plus ? On veut les connaître
+          avec leur pays d’origine</td>
+        <td><code>Produits > Prix >= 50 | Pays d'origine</code></td>
+        <td><code>
+          <strong>SELECT DISTINCT</strong> Fournisseur.Pays, Produit.CodeCateg, Produit.PrixUnit, Produit.NomProd
+          <strong>FROM</strong> (Fournisseur
+          <strong>INNER JOIN</strong>Produit ON Fournisseur.NoFour = Produit.NoFour)
+          <strong>INNER JOIN</strong> DetailCommande ON Produit.RefProd = DetailCommande.RefProd
+          <strong>WHERE</strong> (Produit.CodeCateg = 3 OR Produit.CodeCateg = 1)
+          <strong>AND</strong> Produit.PrixUnit >= 50;
+        </code></td>
+        <td>Il y a donc 5 boissons ou desserts différents vendus 50€ ou plus pour un total de 220 ventes (il suffit de
+          retirer le distinct pour faire apparaître les doublons).</td>
+      </tr>
+
+      <tr>
+        <td>Chiffre d'affaire généré par catégorie (Desserts, Boissons)</td>
+        <td>On veut le chiffre d’affaire généré par catégorie desserts ou catégorie. </td>
+        <td><code>Produits > Catégorie | Chiffre d'affaires (somme des prix)</code></td>
+        <td><code>
+          <strong>SELECT</strong> Sum(Round(DetailCommande.PrixUnitCli * (1 - DetailCommande.Remise) * DetailCommande.QteCom, 2)) <strong>AS</strong> Total
+          <strong>FROM</strong>
+          (Categorie
+          <strong>INNER JOIN</strong> Produit ON Categorie.CodeCateg = Produit.CodeCateg)
+          <strong>INNER JOIN</strong> DetailCommande ON Produit.RefProd = DetailCommande.RefProd
+          <strong>WHERE</strong>
+          Categorie.CodeCateg = 1 <strong>OR</strong> Categorie.CodeCateg = 3;
+        </code></td>
+        <td>Le chiffre d’affaires total est de 532883,46€.</td>
+      </tr>
+      </tbody>
+    </table>
+
+    <!--L'offre de KDou -->
+    <h2>2. L'offre de KDou</h2>
+    <table class="indicators-table">
+      <thead>
+      <tr>
+        <th>✔️Indicateur</th>
+        <th>✔️Énoncé</th>
+        <th>✔️Construction (QBE)</th>
+        <th>✔️SQL</th>
+        <th>✔️Résultat</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td>Fournisseurs proposant des produits non commandés</td>
+        <td>Donner des informations sur les fournisseurs qui proposent des produits qui ne sont pas
+          commandés actuellement ? </td>
+        <td><code>Fournisseurs > Produits non commandés</code></td>
+        <td><code>
+          <strong>SELECT DISTINCT</strong> Fournisseur.Contact, Fournisseur.Pays, Produit.NomProd, Produit.RefProd
+          <strong>FROM</strong> Fournisseur <strong>INNER JOIN</strong> Produit <strong>ON</strong> Fournisseur.NoFour = Produit.NoFour
+          <strong>WHERE</strong> (((Produit.RefProd) <strong>NOT IN</strong> (SELECT DetailCommande.RefProd From DetailCommande)));
+        </code></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>Nombre de produits non commandés par catégorie</td>
+        <td> Combien y –a-t-il de produits non commandés par catégorie ?</td>
+        <td><code>Produits > Catégorie | Non commandé</code></td>
+        <td><code>
+          <strong>SELECT</strong> Produit.CodeCateg, <strong>COUNT</strong>(Produit.RefProd) <strong>AS</strong> NombreProduitsNonCommandes
+          <strong>FROM</strong> Produit
+          <strong>WHERE</strong> Produit.RefProd <strong>NOT IN</strong> (SELECT DetailCommande.RefProd <strong>FROM</strong> DetailCommande)
+          <strong>GROUP BY</strong> Produit.CodeCateg;
+
+        </code></td>
+        <td>Nombre de produits non commandés dans chaque catégorie.</td>
+      </tr>
+      </tbody>
+    </table>
+
+
+    <!-- Provenance des produits -->
+    <h2>3. Provenance des produits</h2>
+    <table class="indicators-table">
+      <thead>
+      <tr>
+        <th>✔️Indicateur</th>
+        <th>✔️Énoncé</th>
+        <th>✔️Construction (QBE)</th>
+        <th>✔️SQL</th>
+        <th>✔️Résultat</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td>Produits en provenance d'Allemagne vendus à moins de 100€</td>
+        <td>Pour l’Allemagne pays proche, quels sont les desserts ou boissons vendus à moins
+          de 100 euros ?</td>
+        <td><code>Produits > Prix < 100 | Pays : Allemagne</code></td>
+        <td><code>
+          <strong>SELECT</strong> Fournisseur.Pays, Produit.NomProd, Produit.PrixUnit
+          <strong>FROM</strong> Client <strong>INNER JOIN</strong> (Commande <strong>INNER JOIN</strong> (Fournisseur <strong>INNER JOIN</strong>
+          ((Categorie <strong>INNER JOIN</strong> Produit <strong>ON</strong> Categorie.CodeCateg = Produit.CodeCateg) <strong>INNER JOIN</strong>
+          DetailCommande <strong>ON</strong> Produit.RefProd = DetailCommande.RefProd) <strong>ON</strong> Fournisseur.NoFour = Produit.NoFour)
+          <strong>ON</strong> Commande.NoCom = DetailCommande.NoCom) <strong>ON</strong> Client.CodeCli = Commande.CodeCli
+          <strong>GROUP BY</strong> Fournisseur.Pays, Produit.CodeCateg, Produit.NomProd, Produit.PrixUnit
+          <strong>HAVING</strong> (((Produit.CodeCateg)=1) <strong>AND</strong> ((Produit.PrixUnit)<100)) <strong>OR</strong> (((Produit.CodeCateg)=3));
+
+        </code></td>
+        <td>Liste des produits d'Allemagne à moins de 100€.</td>
+      </tr>
+      <tr>
+        <td>Fournisseurs vendant uniquement des boissons ou des desserts</td>
+        <td>Quels fournisseurs vendent uniquement des boissons ou des desserts ?</td>
+        <td><code>Fournisseurs > Catégorie : Boissons ou Desserts</code></td>
+        <td><code>
+          <strong>SELECT</strong> Fournisseur.Societe
+          <strong>FROM</strong> Fournisseur
+          <strong>INNER JOIN</strong> Produit <strong>ON</strong> Fournisseur.NoFour = Produit.NoFour
+          <strong>GROUP BY</strong> Fournisseur.NoFour, Fournisseur.Societe
+          <strong>HAVING SUM</strong>(Produit.CodeCateg <strong>NOT IN</strong> (1, 3)) = 0;
+
+        </code></td>
+        <td>
+          Les fournisseurs qui vendent uniquement des boissons ou des desserts sont : Societe
+          Specialty Biscuits, Ltd.,Refrescos Americanas LTDA,Heli Süßwaren GmbH & Co. KG,Aux joyeux ecclésiastiques,Zaanse Snoepfabriek,Karkki Oy,Faro Madeiras,Westpac  Corporation,Perdigão,Globalis,Losad.
+
+        </td>
+      </tr>
+      </tbody>
+    </table>
+
+    <h2>4.Analyse de la clientèle</h2>
+    <table class="indicators-table">
+      <thead>
+      <tr>
+        <th>✔️Indicateur</th>
+        <th>✔️Énoncé</th>
+        <th>✔️Construction (QBE)</th>
+        <th>✔️SQL</th>
+        <th>✔️Résultat</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td>Produits en provenance d'Allemagne vendus à moins de 100€</td>
+        <td>Pour l’Allemagne pays proche, quels sont les desserts ou boissons vendus à moins
+          de 100 euros ?
+        </td>
+        <td><code>Produits > Prix < 100 | Pays : Allemagne</code></td>
+        <td><code>
+
+        </code></td>
+        <td>Liste des produits d'Allemagne à moins de 100€.</td>
+      </tr>
+
+      <tr>
+        <td>Fournisseurs vendant uniquement des boissons ou des desserts</td>
+        <td>Quels fournisseurs vendent uniquement des boissons ou des desserts ?</td>
+        <td><code>Fournisseurs > Catégorie : Boissons ou Desserts</code></td>
+        <td><code>
+          <strong>SELECT</strong> Fournisseur.Societe
+          <strong>FROM</strong> Fournisseur
+          <strong>INNER JOIN</strong> Produit <strong>ON</strong> Fournisseur.NoFour = Produit.NoFour
+          <strong>GROUP BY</strong> Fournisseur.NoFour, Fournisseur.Societe
+          <strong>HAVING SUM</strong>(Produit.CodeCateg <strong>NOT IN</strong> (1, 3)) = 0;
+
+        </code></td>
+        <td>
+          Les fournisseurs qui vendent uniquement des boissons ou des desserts sont : Societe
+          Specialty Biscuits, Ltd.,Refrescos Americanas LTDA,Heli Süßwaren GmbH & Co. KG,Aux joyeux ecclésiastiques,Zaanse Snoepfabriek,Karkki Oy,Faro Madeiras,Westpac  Corporation,Perdigão,Globalis,Losad.
+
+        </td>
+      </tr>
+      </tbody>
+    </table>
+
+
+  </section>
+
+  <section class="context-section">
+    <h2>CONCLUSION</h2>
+    <p>
+      L'étude des données de l'entreprise KDou a révélé des tendances importantes qui influenceront les choix
+      stratégiques de l'entreprise. À travers l'analyse des ventes des desserts et des boissons, nous avons pu repérer
+      les produits les plus lucratifs et ceux qui sont sous-utilisés. En outre, la recherche sur les fournisseurs et les
+      produits non commandés a permis d'explorer des possibilités pour améliorer l'efficacité de la gestion des stocks et
+      améliorer les relations avec les partenaires commerciaux.
+    </p>
+
+    <p>
+      Il a été crucial d'utiliser des outils tels que les requêtes SQL et les analyses par QBE afin d'obtenir des informations
+      pertinentes et de faciliter la prise de décision. Grâce à ces méthodes, il a été possible d'obtenir des résultats précis,
+      mais il a également été possible d'acquérir une compréhension approfondie des conditions commerciales de KDou. Ces
+      connaissances sont essentielles pour étendre la gamme de produits, optimiser les ventes et améliorer constamment
+      l'entreprise.
+    </p>
+  </section>
+  </main>
+
+  <footer>
+    <p>© 2024 KDou Rapport Base de Données</p>
+  </footer>
+
+</body>
+</html>

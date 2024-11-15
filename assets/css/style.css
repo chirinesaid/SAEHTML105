@@ -1,0 +1,645 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: "Geist", sans-serif;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #F5F5DC;
+    font-family: Arial, sans-serif;
+    color: black;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    width: 100%;
+    overflow-x: hidden;
+}
+
+.header {
+    justify-content: center;
+    align-items: center;
+    padding: 20px 0;
+}
+
+.logo {
+    height: 50px;
+    margin-top: 20px;
+    margin-left: 50px;
+}
+
+.menu-toggle {
+    display: none;
+}
+
+
+
+
+nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5% 6%;
+    width: 100%;
+    box-sizing: border-box;
+    flex-wrap: wrap;
+    background-color: #E9D4C3;
+    background-size: cover; /* Pour couvrir toute la largeur et hauteur de l'élément */
+    background-position: center; /* Centre l'image */
+
+}
+
+nav img {
+    width: 150px;
+    height: auto;
+    margin-right: 30px;
+    padding: 8px 20px;
+    position: relative; /* Garde l'image positionnée normalement */
+
+}
+
+.nav-links ul {
+    display:inline-flex;
+    justify-content: space-evenly;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.nav-links ul li {
+    display: inline-flex;
+    padding: 10px 30px;
+}
+
+.nav-links ul li a {
+    color: #4B4B4B;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 20px;
+    position: relative;
+    padding-bottom: 5px;
+    transition:  color 0.3s, border-bottom 0.3s;
+}
+
+
+
+
+
+
+.nav-links #toggle-menu:checked + .menu-icon + .menu {
+    display: block;
+}
+
+.menu-icon {
+    font-size: 30px;
+    cursor: pointer;
+}
+
+/*titre tout en haut*/
+.text-box {
+    position: relative;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+}
+
+.text-box h1 {
+    font-size: 50px;
+    margin-top: 30px;
+    padding-bottom: 30px;
+}
+
+.text-box p {
+    margin: 10px 0 40px;
+    font-size: 14px;
+}
+
+.text-box div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+
+@media (max-width: 520px) {
+    .text-box h1 {
+        font-size: 40px;
+    }
+}
+
+.h1 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+header h1 {
+    color: #4B4B4B;
+    text-align: center;
+    font-family: "Mongolian Baiti";
+}
+
+.card-1 {
+    background-color: sandybrown;
+    margin: 1px;
+    padding: 15px;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+
+.dropbtn {
+    background-color: #A57A5A;
+    color: #FAF3E0;
+    padding: 10px 15px;
+    font-size: 1em;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.dropdown-content,
+.dropdown-CF-content {
+    display: none;
+    position: absolute;
+    background-color: #D9CAB3;
+    min-width: 160px;
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+    z-index: 1;
+}
+
+.dropdown-content a,
+.dropdown-CF-content a {
+    color: #4B4B4B;
+    padding: 12px 16px;
+    display: block;
+}
+
+.dropdown-content a:hover {
+    background-color: #D9CAB3;
+}
+
+.dropdown-CF:hover .dropdown-CF-content .dropdown-content {
+    display: block;
+}
+
+.dropdown:hover .dropbtn {
+    background-color: #A57A5A;
+}
+
+.dropdown-CF {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-CF-content a:hover {
+    background-color: sandybrown;
+}
+.CF {
+    background-color: #A57A5A;
+    color: white;
+    padding: 5px 5px;
+    font-size: 1em;
+    cursor: pointer;
+    border-radius: 5px;
+}
+nav ul {
+    display: inline-block;
+    justify-content: center;
+    list-style: none;
+}
+
+nav ul li {
+    margin: 1px;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+}
+
+
+
+main {
+    flex-grow: 1;
+    margin-top: 5px;
+    margin-right: 50px;
+    margin-left: 50px;
+    padding-right: 50px;
+    padding-left: 50px;
+}
+
+section {
+    margin-bottom: 2rem;
+}
+
+h2 {
+    color: #4B4B4B;
+    margin-bottom: 0.5rem;
+    margin-top: 50px;
+    text-align: center;
+}
+
+section p {
+    padding-left: 0;
+}
+
+footer {
+    background-color: #E9D4C3;
+    color: #FAF3E0;
+
+    text-align: center;
+    padding: 1rem;
+}
+
+
+
+.card {
+    background-color: #4B4B4B;
+    color: #FAF3E0;
+    padding: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    border-radius: 5px;
+    width: 100%;
+    max-width: 200px;
+    margin: 10px;
+}
+.card-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 80px;
+    padding: 20px;
+}
+.card img {
+    width: 100px;
+    height: 100px;
+    border-radius: 5px;
+    object-fit: cover;
+    margin-bottom: 10px;
+}
+
+@media (max-width: 768px) {
+    .menu-toggle {
+        display: block;
+        font-size: 30px;
+        cursor: pointer;
+        color: #4B4B4B;
+    }
+
+    .nav-links ul {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+        position: absolute;
+        top: 60px;
+        background-color: #D9CAB3;
+    }
+
+    nav.active .nav-links ul {
+        display: block;
+    }
+
+    .card, table {
+        width: 100%;
+    }
+
+    th, td {
+        padding: 8px;
+    }
+
+    td code {
+        font-size: 12px;
+    }
+
+}
+
+
+.mission-content {
+    padding: 10px;
+    max-width: 800px;
+    margin: 20px auto;
+    text-align: left;
+}
+
+.mission-section {
+    margin-bottom: 20px;
+}
+
+.mission-content h2 {
+    font-size: 50px;
+    text-align: center;
+    color: #4B4B4B;
+}
+
+.nav-links ul li a {
+    color: #4B4B4B;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.nav-links ul li a:hover {
+    color: #A57A5A;
+    border-bottom: 2px solid #A57A5A;
+}
+
+.summary-table {
+    margin: 20px auto;
+    width: 60%;
+    background-color: darkolivegreen;
+}
+
+.summary-table td {
+    padding: 10px;
+    background-color: beige;
+    color: darkolivegreen;
+    text-align: left;
+    font-weight: bold;
+}
+
+@media (max-width: 520px) {
+    main {
+        margin: 50px;
+    }
+
+    .mission-content h2 {
+        font-size: 30px;
+    }
+
+    .mission-section {
+        margin-bottom: 15px;
+    }
+}
+
+
+
+
+
+nav img {
+    width: 2px;
+}
+
+
+
+.nav-links ul li a {
+    color: #4B4B4B;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.nav-links ul li a:hover {
+    color: #A57A5A;
+    border-bottom: 2px solid #A57A5A;
+}
+
+
+.mission-content {
+    padding: 10px;
+    max-width: 800px;
+    margin: 20px auto; /* Centre la section et ajoute un petit espace en bas */
+    text-align: left;
+    position: relative; /* Ajoute le positionnement relatif */
+
+}
+
+.mission-section {
+    margin-bottom: 20px;
+}
+
+.mission-wrapper {
+    margin-top: 50px; /* Ajoute un espacement vertical au-dessus de mission-content */
+}
+
+.mission-section h3 {
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.code-block {
+    display: inline-block;
+    background-color: darkolivegreen;
+    color: #FFF;
+    padding: 10px;
+    font-family: "Courier New", monospace;
+    border-radius: 5px;
+    margin: 10px 0;
+    max-width: 100%;
+    white-space: nowrap;
+}
+
+
+.image-proof {
+    margin: 10px 0;
+}
+
+.image-proof img {
+    width: 100%;
+    max-width: 600px;
+    height: auto;
+    border: 1px solid #A57A5A;
+}
+
+/*css pour le tableau mission1 */
+.summary-table {
+    margin: 20px auto;
+    width: 60%;
+    background-color: darkolivegreen;
+    border-radius: 1px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.summary-table table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.summary-table td {
+    padding: 10px;
+    border: 1px solid darkolivegreen;
+    background-color: beige;
+    color: darkolivegreen;
+}
+
+.summary-table td:first-child {
+    text-align: left;
+    font-weight: bold;
+}
+/* Fin css pour le tableau mission1 */
+
+.mission-content h2 {
+    font-size: 50px;
+    text-align: center;
+    margin-top: 10%;
+    color: #4B4B4B;
+}
+
+
+.mission-content {
+    max-width: 100%;
+    padding: 20px;
+    margin: auto;
+    text-align: center;
+}
+
+/* css pour les écran petite taille <= 520px*/
+@media (max-width: 520px) {
+
+    main {
+        margin: 50px;
+    }
+
+    nav {
+        padding: 20px 6%;
+    }
+
+    .mission-content h2 {
+        font-size: 30px;
+        margin-top: 20px;
+    }
+
+    .mission-section {
+        margin-bottom: 15px;
+    }
+
+}
+
+/* pour les titres */
+.text-box {
+    top: 5%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+}
+
+.mission {
+    position: absolute;
+    top: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    color: saddlebrown;
+    width: 100%;
+}
+
+
+.context-section {
+    max-width: 1000px;
+    margin: 50px auto;
+    padding: 10px;
+    background-color: beige;
+    border: 1.5px solid #A57A5A;
+    border-radius: 8px;
+    box-shadow: 0 20px 20px rgba(0, 0, 0, 0.1);
+    font-family: Arial, sans-serif;
+    color: #4B4B4B;
+    text-align: center;
+}
+
+.context-section  > h2{
+    margin: 5px;
+    padding: 10px;
+}
+
+/* css du tableau */
+.indicators-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    font-family: Arial, sans-serif;
+}
+
+/* Style des en-têtes */
+.indicators-table th {
+    background-color: #4B4B4B;
+    color: white;
+    padding: 10px;
+    text-align: left;
+}
+
+
+.indicators-table td {
+    padding: 10px;
+    text-align: center;
+    border: 1px solid #ddd;
+}
+
+
+.indicators-table tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+
+.indicators-table tr:hover {
+    background-color: #E9D4C3;
+}
+
+/*mission1 pour le contexte et "qui est kdou"*/
+details summary{
+    border-style: double;
+    border-width: 3px;
+}
+
+.summary-table h3.Bilan {
+    font-weight: bold;
+}
+
+.img-precision {
+    text-align: center;
+    vertical-align: middle;
+}
+
+.summary-table {
+    margin: 20px auto;
+    width: 100%;
+    background-color: #4B4B4B;
+    border-radius: 1px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.summary-table table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.summary-table td {
+    padding: 10px;
+    border: 1px solid #4B4B4B;
+    background-color: beige;
+    color: #4B4B4B;
+}
+
+.summary-table td:first-child {
+    text-align: left;
+
+}
+
+.Bilan {
+    color: beige;
+    text-align: center;
+}
+
+#mission2 h3 {
+    color: #4B4B4B;
+    font-weight: bold;
+    font-size: 20px;
+    position: relative;
+    text-align: center;
+}
+
+#mission3 h1 {
+    text-align: center;
+}
+
+.card2 {
+    text-align: center;
+}
+
+
+
